@@ -13,14 +13,14 @@ for %%F in (*.gnu) do gnuplot %%F
 cd ..
 ::
 :: backup previous output
-cp %~dpn1.pdf %~dpn1.backup.pdf
+cp %~n1.pdf %~n1.backup.pdf
 ::
 :: run lualatex, producing PDF file
-lualatex %1
+lualatex -output-directory build -output-format pdf -draftmode %1
 :: run biber to resolve citations
-biber %~dpn1.bcf
+biber build/%~n1.bcf
 :: build the final PDF file
-lualatex %1
+lualatex -output-directory build -output-format pdf %1
 ::
 :: Here is the other possible method based on plain latex:
 :: run latex producing .dvi file

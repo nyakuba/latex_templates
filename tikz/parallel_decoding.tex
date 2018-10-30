@@ -1,0 +1,85 @@
+%% In header include:
+%%   \usepackage{tikz,pgffor,ifthen,animate}
+%% Usage:
+%%   \begin{figure} \input{parallel_decoding.tex} \end{figure}
+%
+\begin{animateinline}[poster=last,loop,autoplay]{3}
+  \multiframe{10}{iFrameIndex=1+1}{%
+    \scalebox{0.6}{%
+      \begin{tikzpicture}
+        \tikzset{%
+          RT/.style={
+            draw,
+            rectangle,
+            minimum size=13pt,
+            inner sep=1pt
+          }
+        }
+        \def\hs{0.8} % horizontal spacing
+        \def\Y{1}    % vertical coordinate of the tree root
+        \def\D{0.5}  % lesser vertical node offset in the tree
+
+        % draw first codeword
+        \def\cw{0/0,1/0,2/0,3/1,4/0,5/1,6/0,7/1}
+        \foreach \x/\y in \cw {%
+          \ifthenelse{\x < \iFrameIndex}{%
+            \ifthenelse{\y = 0}
+                       { \node[RT,color=blue] at (\x * \hs, \Y){\tiny 0}; }
+                       { \node[RT,color=red] at (\x * \hs, \Y){\tiny 1}; }
+          }{}
+        }
+        \ifthenelse{\iFrameIndex < 9}{
+          \node[RT,color=black] at (\iFrameIndex * \hs, \Y){\tiny $u_{\iFrameIndex}$};
+          \foreach \x in {\iFrameIndex,...,23}{%
+            \node[RT,color=gray] at (\x * \hs, \Y){\tiny $u_{\x}$}; }
+        }{
+          \node[RT,color=black] at (8 * \hs, \Y){\tiny $u_{8}$};
+          \foreach \x in {8,...,23}{%
+            \node[RT,color=gray] at (\x * \hs, \Y){\tiny $u_{\x}$}; }
+        }
+
+        \draw[thick] (-\hs / 2, \Y-\D) -- (23*\hs+\hs / 2, \Y-\D); % delimeter
+        \draw[thick,dashed] (7*\hs+\hs / 2, \Y-\D) -- (7*\hs+\hs / 2, \Y-2.5*\D);
+        \draw[thick,dashed] (15*\hs+\hs / 2, \Y-\D) -- (15*\hs+\hs / 2, \Y-2.5*\D);
+
+        % draw second codeword
+        \def\ca{0/0,1/0,2/0,3/1,4/0,5/1,6/0,7/1}
+        \foreach \x/\y in \ca {%
+          \ifthenelse{\x < \iFrameIndex}{%
+            \ifthenelse{\y = 0}
+                       { \node[RT,color=blue] at (\x * \hs, \Y-2*\D){\tiny 0}; }
+                       { \node[RT,color=red] at (\x * \hs, \Y-2*\D){\tiny 1}; }
+          }{\ifthenelse{\x = \iFrameIndex}
+             { \node[RT,color=black] at (\x * \hs, \Y-2*\D){\tiny $v_{\x}$}; }
+             { \node[RT,color=gray] at (\x * \hs, \Y-2*\D){\tiny $v_{\x}$}; }
+          }
+        }
+
+        \def\cb{0/0,1/0,2/0,3/0,4/0,5/1,6/1,7/1}
+        \foreach \x/\y in \cb {%
+          \ifthenelse{\x < \iFrameIndex}{%
+            \ifthenelse{\y = 0}
+                       { \node[RT,color=blue] at (\x * \hs + 8*\hs, \Y-2*\D){\tiny 0}; }
+                       { \node[RT,color=red] at (\x * \hs + 8*\hs, \Y-2*\D){\tiny 1}; }
+          }{\ifthenelse{\x = \iFrameIndex}
+             { \node[RT,color=black] at (\x * \hs + 8*\hs, \Y-2*\D){\tiny $v_{\x}$}; }
+             { \node[RT,color=gray] at (\x * \hs + 8*\hs, \Y-2*\D){\tiny $v_{\x}$}; }
+          }
+        }
+
+        \def\cc{0/0,1/0,2/0,3/1,4/0,5/1,6/0,7/0}
+        \foreach \x/\y in \cc {%
+          \ifthenelse{\x < \iFrameIndex}{%
+            \ifthenelse{\y = 0}
+                       { \node[RT,color=blue] at (\x * \hs + 16*\hs, \Y-2*\D){\tiny 0}; }
+                       { \node[RT,color=red] at (\x * \hs + 16*\hs, \Y-2*\D){\tiny 1}; }
+          }{\ifthenelse{\x = \iFrameIndex}
+             { \node[RT,color=black] at (\x * \hs + 16*\hs, \Y-2*\D){\tiny $v_{\x}$}; }
+             { \node[RT,color=gray] at (\x * \hs + 16*\hs, \Y-2*\D){\tiny $v_{\x}$}; }
+          }
+        }
+      \end{tikzpicture}
+    }
+  }
+\end{animateinline}
+%

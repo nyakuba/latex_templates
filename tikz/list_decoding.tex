@@ -1,0 +1,181 @@
+%% Animation of list decoding algorithm.
+%%
+%% In header include:
+%%   \usepackage{tikz,pgffor,ifthen,animate}
+%% Usage:
+%%   \begin{figure} \input{list_decoding.tex} \end{figure}
+%
+\begin{animateinline}[poster=last,controls,loop,autoplay,buttonsize=1em]{3}
+  \multiframe{20}{iFrameIndex=1+1}{%
+    \scalebox{0.6}{%
+      \begin{tikzpicture}
+        \tikzset{%
+          point/.style={
+            draw,
+            circle,
+            thick,
+            fill=white,
+            solid,
+            radius={\pgflinewidth},
+            opacity=1,
+            inner sep=0pt
+          },
+          end/.style={
+            draw,
+            rectangle,
+            thick,
+            color=black,
+            fill=gray,
+            inner sep={2\pgflinewidth}
+          },
+          F/.style={ thick, color=black },
+          B/.style={ F },
+          Z/.style={ thick, color=blue },
+          U/.style={ thick, color=red },
+          nF/.style={
+            F,
+            draw,
+            circle,
+            fill=white,
+            inner sep=1pt
+          },
+          nZ/.style={
+            F,
+            draw,
+            circle,
+            fill=white,
+            inner sep=1pt
+          },
+          nU/.style={
+            F,
+            draw,
+            circle,
+            fill=white,
+            inner sep=1pt
+          }
+        }
+        \def\hs{1}       % horizontal spаce
+        \def\Y{1}        % vertical coordinate of the tree root
+        \def\D{0.4}      % vertical offset of a node in the tree
+        \def\HU{\Y+6*\D} % vertical position of vector u_0^{N-1}
+        \def\DD{0.3}     % lesser vertical node offset in the tree
+
+        % draw header, bottom and vertical lines
+        \foreach \x in {1,...,15}{ \draw[dashed] (\x, \Y+7*\D) -- (\x, \Y-5*\D); }
+        \foreach \x in {0,1,2,3,4,5,6,8}{ \node[above,color=gray] at (\x * \hs + \hs / 2, \HU) {$u_{\x}$}; }
+        \foreach \x in {7,9,10,11,12,13,14,15}{ \node[above,color=black] at (\x * \hs + \hs / 2, \HU) {$u_{\x}$}; }
+        \draw[B] (-\DD, \HU) -- (16*\hs+\DD, \HU); % top border
+        \draw[B] (-\DD, \Y-5*\D) -- (16*\hs+\DD, \Y-5*\D); % bottom border
+        \draw[B] (-\DD, \HU) -- (-\DD, \Y-5*\D); % left border
+        \draw[B] (16*\hs+\DD, \HU) -- (16*\hs+\DD, \Y-5*\D); % right border
+
+        % triangle marker
+        \ifthenelse{\iFrameIndex < 16}
+          { \node[B, below] at (\iFrameIndex * \hs - \hs / 2, \HU) {$\vartriangle$}; }{}
+        
+        \ifthenelse{\iFrameIndex < 16}{%
+          % draw frames
+          \ifthenelse{\iFrameIndex < 7}{%
+            \foreach \x in {1,...,\iFrameIndex}{%
+              \draw[F] (\x * \hs - \hs, \Y) -- node[nF]{\tiny 0} (\x * \hs, \Y); }
+            \foreach \x in {0,...,\iFrameIndex}{ \node[point] at (\x, \Y){}; }
+          }{
+            \foreach \x in {1,...,7}{%
+              \draw[F] (\x * \hs - \hs, \Y) -- node[nF]{\tiny 0} (\x * \hs, \Y); }
+            \foreach \x in {0,...,7}{ \node[point] at (\x, \Y){}; }
+          }
+          \ifthenelse{\iFrameIndex > 7}{%
+            \draw[Z] (7*\hs, \Y) -- node[nZ]{\tiny 0} (8*\hs, \Y+\D) node[point]{};
+            \draw[U] (7*\hs, \Y) -- node[nU]{\tiny 1} (8*\hs, \Y-\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 8}{%
+            \draw[F] (8*\hs, \Y+1*\D) -- node[nF]{\tiny 0} (9*\hs, \Y+1*\D) node[point]{};
+            \draw[F] (8*\hs, \Y-1*\D) -- node[nF]{\tiny 0} (9*\hs, \Y-1*\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 9}{%
+            \draw[Z] ( 9*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (10*\hs, \Y+2*\D) node[point]{};
+            \draw[U] ( 9*\hs, \Y+1*\D) -- node[nU]{\tiny 1} (10*\hs, \Y+\D-\DD) node[end]{};
+            \draw[Z] ( 9*\hs, \Y-1*\D) -- node[nZ]{\tiny 0} (10*\hs, \Y-\D+\DD) node[end]{};
+            \draw[U] ( 9*\hs, \Y-1*\D) -- node[nU]{\tiny 1} (10*\hs, \Y-2*\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 10}{%
+            \draw[Z] (10*\hs, \Y+2*\D) -- node[nZ]{\tiny 0} (11*\hs, \Y+3*\D) node[point]{};
+            \draw[U] (10*\hs, \Y+2*\D) -- node[nU]{\tiny 1} (11*\hs, \Y+1*\D) node[end]{};
+            \draw[Z] (10*\hs, \Y-2*\D) -- node[nZ]{\tiny 0} (11*\hs, \Y-1*\D) node[end]{};
+            \draw[U] (10*\hs, \Y-2*\D) -- node[nU]{\tiny 1} (11*\hs, \Y-3*\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 11}{%
+            \draw[Z] (11*\hs, \Y+3*\D) -- node[nZ]{\tiny 0} (12*\hs, \Y+4*\D) node[point]{};
+            \draw[U] (11*\hs, \Y+3*\D) -- node[nU]{\tiny 1} (12*\hs, \Y+2*\D) node[point]{};
+            \draw[Z] (11*\hs, \Y-3*\D) -- node[nZ]{\tiny 0} (12*\hs, \Y-2*\D) node[point]{};
+            \draw[U] (11*\hs, \Y-3*\D) -- node[nU]{\tiny 1} (12*\hs, \Y-4*\D) node[end]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 12}{%
+            \draw[U] (12*\hs, \Y+4*\D) -- node[nU]{\tiny 1} (13*\hs, \Y+4*\D) node[point]{};
+            \draw[Z] (12*\hs, \Y+2*\D) -- node[nZ]{\tiny 0} (13*\hs, \Y+3*\D) node[point]{};
+            \draw[U] (12*\hs, \Y+2*\D) -- node[nU]{\tiny 1} (13*\hs, \Y+1*\D) node[point]{};
+            \draw[Z] (12*\hs, \Y-2*\D) -- node[nZ]{\tiny 0} (13*\hs, \Y-2*\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 13}{%
+            \draw[U] (13*\hs, \Y+4*\D) -- node[nU]{\tiny 1} (14*\hs, \Y+4*\D) node[point]{};
+            \draw[Z] (13*\hs, \Y+3*\D) -- node[nZ]{\tiny 0} (14*\hs, \Y+3*\D) node[end]{};
+            \draw[Z] (13*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (14*\hs, \Y+1*\D) node[point]{};
+            \draw[U] (13*\hs, \Y-2*\D) -- node[nU]{\tiny 1} (14*\hs, \Y-2*\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 14}{%
+            \draw[Z] (14*\hs, \Y+4*\D) -- node[nZ]{\tiny 0} (15*\hs, \Y+5*\D) node[end]{};
+            \draw[U] (14*\hs, \Y+4*\D) -- node[nU]{\tiny 1} (15*\hs, \Y+3*\D) node[point]{};
+            \draw[Z] (14*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (15*\hs, \Y+1*\D) node[point]{};
+            \draw[Z] (14*\hs, \Y-2*\D) -- node[nZ]{\tiny 0} (15*\hs, \Y-2*\D) node[point]{};
+          }{}
+          \ifthenelse{\iFrameIndex > 15}{%
+            \draw[U] (15*\hs, \Y+3*\D) -- node[nU]{\tiny 1} (16*\hs, \Y+3*\D) node[end]{};
+            \draw[Z] (15*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (16*\hs, \Y+2*\D) node[end]{};
+            \draw[U] (15*\hs, \Y+1*\D) -- node[nU]{\tiny 1} (16*\hs, \Y+0*\D) node[end]{};
+            \draw[Z] (15*\hs, \Y-2*\D) -- node[nZ]{\tiny 0} (16*\hs, \Y-2*\D) node[end]{};
+          }{}
+        }{%
+          % draw correct path, other is gray
+          \draw[U, color=gray] (7*\hs, \Y)       -- (8*\hs, \Y-\D) node[point]{};
+          \draw[F, color=gray] (8*\hs, \Y-1*\D)  -- (9*\hs, \Y-1*\D) node[point]{};
+          \draw[U, color=gray] ( 9*\hs, \Y+1*\D) -- (10*\hs, \Y+\D-\DD) node[end,color=gray]{};
+          \draw[Z, color=gray] ( 9*\hs, \Y-1*\D) -- (10*\hs, \Y-\D+\DD) node[end,color=gray]{};
+          \draw[U, color=gray] ( 9*\hs, \Y-1*\D) -- (10*\hs, \Y-2*\D) node[point]{};
+          \draw[U, color=gray] (10*\hs, \Y+2*\D) -- (11*\hs, \Y+1*\D) node[end,color=gray]{};
+          \draw[Z, color=gray] (10*\hs, \Y-2*\D) -- (11*\hs, \Y-1*\D) node[end,color=gray]{};
+          \draw[U, color=gray] (10*\hs, \Y-2*\D) -- (11*\hs, \Y-3*\D) node[point]{};
+          \draw[Z, color=gray] (11*\hs, \Y+3*\D) -- (12*\hs, \Y+4*\D) node[point]{};
+          \draw[Z, color=gray] (11*\hs, \Y-3*\D) -- (12*\hs, \Y-2*\D) node[point]{};
+          \draw[U, color=gray] (11*\hs, \Y-3*\D) -- (12*\hs, \Y-4*\D) node[end,color=gray]{};
+          \draw[U, color=gray] (12*\hs, \Y+4*\D) -- (13*\hs, \Y+4*\D) node[point]{};
+          \draw[Z, color=gray] (12*\hs, \Y+2*\D) -- (13*\hs, \Y+3*\D) node[point]{};
+          \draw[Z, color=gray] (12*\hs, \Y-2*\D) -- (13*\hs, \Y-2*\D) node[point]{};
+          \draw[U, color=gray] (13*\hs, \Y+4*\D) -- (14*\hs, \Y+4*\D) node[point]{};
+          \draw[Z, color=gray] (13*\hs, \Y+3*\D) -- (14*\hs, \Y+3*\D) node[end,color=gray]{};
+          \draw[U, color=gray] (13*\hs, \Y-2*\D) -- (14*\hs, \Y-2*\D) node[point]{};
+          \draw[Z, color=gray] (14*\hs, \Y+4*\D) -- (15*\hs, \Y+5*\D) node[end,color=gray]{};
+          \draw[U, color=gray] (14*\hs, \Y+4*\D) -- (15*\hs, \Y+3*\D) node[point]{};
+          \draw[Z, color=gray] (14*\hs, \Y-2*\D) -- (15*\hs, \Y-2*\D) node[point]{};
+          \draw[U, color=gray] (15*\hs, \Y+3*\D) -- (16*\hs, \Y+3*\D) node[end,color=gray]{};
+          \draw[U, color=gray] (15*\hs, \Y+1*\D) -- (16*\hs, \Y+0*\D) node[end,color=gray]{};
+          \draw[Z, color=gray] (15*\hs, \Y-2*\D) -- (16*\hs, \Y-2*\D) node[end,color=gray]{};
+
+          % correct path
+          \foreach \x in {1,...,7}{%
+            \draw[F, very thick] (\x * \hs - \hs, \Y) -- node[nF]{\tiny 0} (\x * \hs, \Y); }
+          \foreach \x in {0,...,7}{ \node[point] at (\x, \Y){}; }
+          \draw[Z, very thick] (7*\hs, \Y) -- node[nZ]{\tiny 0} (8*\hs, \Y+\D) node[point]{};
+          \draw[F, very thick] (8*\hs, \Y+1*\D) -- node[nF]{\tiny 0} (9*\hs, \Y+1*\D) node[point]{};
+          \draw[Z, very thick] ( 9*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (10*\hs, \Y+2*\D) node[point]{};
+          \draw[Z, very thick] (10*\hs, \Y+2*\D) -- node[nZ]{\tiny 0} (11*\hs, \Y+3*\D) node[point]{};
+          \draw[U, very thick] (11*\hs, \Y+3*\D) -- node[nU]{\tiny 1} (12*\hs, \Y+2*\D) node[point]{};
+          \draw[U, very thick] (12*\hs, \Y+2*\D) -- node[nU]{\tiny 1} (13*\hs, \Y+1*\D) node[point]{};
+          \draw[Z, very thick] (13*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (14*\hs, \Y+1*\D) node[point]{};
+          \draw[Z, very thick] (14*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (15*\hs, \Y+1*\D) node[point]{};
+          \draw[Z, very thick] (15*\hs, \Y+1*\D) -- node[nZ]{\tiny 0} (16*\hs, \Y+2*\D) node[end]{};
+        }{}
+      \end{tikzpicture}
+    }
+  }
+\end{animateinline}
+%
