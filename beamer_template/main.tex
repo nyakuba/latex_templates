@@ -1,15 +1,15 @@
 % !TEX encoding = UTF-8 Unicode
 %----------------------------------------------------------------------------------------
 % Some of the frequently used optional parameters:
-% 10pt (default), 11pt, 12pt --- font size
+% 10pt, 11pt, 12pt --- font size
 % draft --- disables figures and is used to speed up typesetting during development
 % fleqn --- left alignment of formulas
 % leqno --- labels formulas on the left-hand side (instead of right)
 % aspectratio --- possible values: 1610 (16:10), 169 (16:9), 149 (14:9), 141 (1.41:1),
 %                                  54 (5:4), 43 (4:3), 32 (3:2)
 
-\documentclass[russian,fleqn]{beamer}
-%\documentclass[russian,fleqn,aspectratio=169]{beamer}
+\documentclass[10pt,russian,fleqn]{beamer}
+%\documentclass[10pt,russian,fleqn,aspectratio=169]{beamer}
 
 %----------------------------------------------------------------------------------------
 % Fontspec is a package for XeLaTeX and LuaLaTeX.
@@ -23,9 +23,27 @@
 %\setmonofont{Latin Modern Mono}
 
 % Linux standard fonts with cyrillic support:
-\setmainfont{Liberation Serif}
-\setsansfont{Liberation Sans}
-\setmonofont{Liberation Mono}
+%\setmainfont{Liberation Serif}
+%\setsansfont{Liberation Sans}
+%\setmonofont{Liberation Mono}
+
+% It is also possible to use local fonts:
+\setmainfont[Path=./fonts/, Extension=.ttf,
+             UprightFont=*-Regular,
+             ItalicFont=*-Italic,
+             BoldFont=*-Bold,
+             BoldItalicFont=*-BoldItalic]{LiberationSerif}
+\setsansfont[Path=./fonts/, Extension=.ttf,
+             UprightFont=*-Regular,
+             ItalicFont=*-Italic,
+             BoldFont=*-Bold,
+             BoldItalicFont=*-BoldItalic]{LiberationSans}
+\setmonofont[Path=./fonts/, Extension=.ttf,
+             UprightFont=*-Regular,
+             ItalicFont=*-Italic,
+             BoldFont=*-Bold,
+             BoldItalicFont=*-BoldItalic]{LiberationMono}
+
 
 %----------------------------------------------------------------------------------------
 % Alternative: babel package

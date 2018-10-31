@@ -5,23 +5,17 @@ echo Usage: make <file>.tex
 echo Using main.tex by default...
 make.bat main.tex
 goto End
-::
+:: ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 :Make
-:: run gnuplot
-cd plots
-for %%F in (*.gnu) do gnuplot %%F
-cd ..
-::
 :: backup previous output
-cp %~n1.pdf %~n1.backup.pdf
-::
+cp build/%~n1.pdf build/%~n1.backup.pdf
 :: run lualatex, producing PDF file
 lualatex -output-directory build -output-format pdf -draftmode %1
 :: run biber to resolve citations
 biber build/%~n1.bcf
 :: build the final PDF file
 lualatex -output-directory build -output-format pdf %1
-::
+:: ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 :: Here is the other possible method based on plain latex:
 :: run latex producing .dvi file
 :: .dvi file is the DeVice Independent output format of original Knuth's TeX

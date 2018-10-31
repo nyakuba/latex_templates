@@ -42,9 +42,26 @@
 %\setmonofont{Latin Modern Mono}
 
 % Linux standard fonts with cyrillic support:
-\setmainfont{Liberation Serif}
-\setsansfont{Liberation Sans}
-\setmonofont{Liberation Mono}
+%\setmainfont{Liberation Serif}
+%\setsansfont{Liberation Sans}
+%\setmonofont{Liberation Mono}
+
+% It is also possible to use local fonts:
+\setmainfont[Path=./fonts/, Extension=.ttf,
+             UprightFont=*-Regular,
+             ItalicFont=*-Italic,
+             BoldFont=*-Bold,
+             BoldItalicFont=*-BoldItalic]{LiberationSerif}
+\setsansfont[Path=./fonts/, Extension=.ttf,
+             UprightFont=*-Regular,
+             ItalicFont=*-Italic,
+             BoldFont=*-Bold,
+             BoldItalicFont=*-BoldItalic]{LiberationSans}
+\setmonofont[Path=./fonts/, Extension=.ttf,
+             UprightFont=*-Regular,
+             ItalicFont=*-Italic,
+             BoldFont=*-Bold,
+             BoldItalicFont=*-BoldItalic]{LiberationMono}
 
 %----------------------------------------------------------------------------------------
 % Alternative: babel package
@@ -131,15 +148,14 @@
 % The package provides extensive facilities, both for constructing headers and footers,
 % and for controlling their use.
 \usepackage{fancyhdr}
-
-% Add link to table of contents at the footer of each page
 \pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}% removes header line
-\fancypagestyle{plain}{% for chapter starting pages
-  \fancyhf{}% clears header fields
-  \cfoot{\hyperlink{contents}{\contentsname}\hfill\thepage}}
-% links the TOC at the center of the page footer
-\cfoot{\hyperlink{contents}{\contentsname}\hfill\thepage}
+
+% Uncomment this block to аdd link to table of contents at the footer of each page
+%\renewcommand{\headrulewidth}{0pt}% removes header line
+%\fancypagestyle{plain}{% for chapter starting pages
+%  \fancyhf{}  % clears header fields
+%  \cfoot{\hyperlink{contents}{\contentsname}\hfill\thepage}}
+%\cfoot{\hyperlink{contents}{\contentsname}\hfill\thepage}  % links TOC to page footer
 
 %----------------------------------------------------------------------------------------
 % This package prevents page numbers and headings from appearing on empty pages. 
