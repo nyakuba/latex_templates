@@ -20,7 +20,7 @@
 % notitlepage (default for article), titlepage (default for report and book) --- display title page
 % openany (default for report), openright (default for book) --- open chapters on any page, or only on odd pages
 
-\documentclass[12pt,twoside,a4paper]{article}
+\documentclass[12pt,oneside,a4paper,fleqn]{article}
 
 %----------------------------------------------------------------------------------------
 % The package provides an easy and flexible user interface to customize page layout,
@@ -62,6 +62,13 @@
              ItalicFont=*-Italic,
              BoldFont=*-Bold,
              BoldItalicFont=*-BoldItalic]{LiberationMono}
+
+%----------------------------------------------------------------------------------------
+% Provides support for setting the spacing between lines in a document.
+% Package options include singlespacing, onehalfspacing, and doublespacing.
+% Introduces \singlespacing, \onehalfspacing, and \doublespacing commands.
+% Other size spacings also available (\setstretch). 
+\usepackage{setspace}
 
 %----------------------------------------------------------------------------------------
 % Alternative: babel package
@@ -128,6 +135,13 @@
 %\cftsetindents{subsection}{0em}{2em}
 
 %----------------------------------------------------------------------------------------
+% This package provides user control over the layout of the three basic list environments:
+% enumerate, itemize and description.
+\usepackage{enumitem}
+
+% Example: \begin{enumerate}[label=\roman*.] --- use roman numbers followed by dot in items
+
+%----------------------------------------------------------------------------------------
 \usepackage{amsmath,amsthm,amssymb}  % math packages
 \usepackage{dsfont}  % math font
 
@@ -156,6 +170,12 @@
 %  \fancyhf{}  % clears header fields
 %  \cfoot{\hyperlink{contents}{\contentsname}\hfill\thepage}}
 %\cfoot{\hyperlink{contents}{\contentsname}\hfill\thepage}  % links TOC to page footer
+
+%----------------------------------------------------------------------------------------
+% Provides variants of \fbox: \shadowbox, \doublebox, \ovalbox, \Ovalbox, with helpful tools
+% for using box macros and flexible verbatim macros.
+% You can box mathematics, floats, center, flushleft, and flushright, lists, and pages.
+\usepackage{fancybox}
 
 %----------------------------------------------------------------------------------------
 % This package prevents page numbers and headings from appearing on empty pages. 
@@ -291,6 +311,7 @@
 % use [disable] option to remove all todoes from text
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 
+\presetkeys{todonotes}{inline}{}  % set inline option for \todo command by default
 \setlength{\marginparwidth}{2cm}  % set width of margin where comment will be placed
 
 %----------------------------------------------------------------------------------------

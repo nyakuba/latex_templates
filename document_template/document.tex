@@ -20,7 +20,7 @@
 
 %----------------------------------------------------------------------------------------
 % titlepage
-\input{title.tex}
+\input{title_spbstu.tex}
 
 %----------------------------------------------------------------------------------------
 \cleardoublepage  % start actual document from the odd page
@@ -105,6 +105,22 @@ This is my \emph{first} document prepared in \LaTeX.
 \end{multicols}
 
 Более подробное введение можно прочитать в \cite{latexWikibook}.
+
+\subsection{Размер шрифта}
+\begin{center}
+  \begin{tabular}{r|l}
+    {\tiny sample text}         & \textbackslash tiny \\
+    {\scriptsize sample text}   & \textbackslash scriptsize \\
+    {\footnotesize sample text} & \textbackslash footnotesize \\
+    {\small sample text}        & \textbackslash small \\
+    {\normalsize sample text}   & \textbackslash normalsize \\
+    {\large sample text}        & \textbackslash large \\
+    {\Large	sample text}        & \textbackslash Large \\
+    {\LARGE	sample text}        & \textbackslash LARGE \\
+    {\huge	sample text}        & \textbackslash huge \\
+    {\Huge sample text}         & \textbackslash Huge
+  \end{tabular}
+\end{center}
 
 %----------------------------------------------------------------------------------------
 \section{Возможности TeX}
@@ -312,6 +328,16 @@ This is my \emph{first} document prepared in \LaTeX.
 %----------------------------------------------------------------------------------------
 \clearpage
 \printbibliography
+
+\clearpage
+\begin{appendices}
+  \section{Приложение}
+  Секция для вставки приложений.
+  В статье здесь обычно располагают технические доказательства, а также справочную информацию.
+
+  \section{Еще одно приложение}
+  \todo[inline]{Вставить какое-нибудь доказательство}
+\end{appendices}
 
 \listoftodos[TODO notes]
 \end{document}
